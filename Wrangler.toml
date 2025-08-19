@@ -1,0 +1,13 @@
+name = "wt-mode-picker"
+compatibility_date = "2023-05-18"
+compatibility_flags = ["nodejs_compat"]
+
+kv_namespaces = [
+  { binding = "MODE_PICKER_KV", id = "ee9ec9a2be864b9fba6ab65fda007766" }
+]
+
+[vars]
+NODE_ENV = "production"
+
+[env.production]
+workers_dev = true
