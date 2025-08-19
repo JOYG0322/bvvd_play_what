@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bvvd今天玩什么</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #5d87b3;
+            --secondary-color: #7d9bbd;
+            --background-color: #1a1a2e;
+            --text-color: #e6e6e6;
+            --card-bg: #16213e;
+            --border-color: #374785;
+            --shadow-color: rgba(0, 0, 0, 0.3);
+            --button-bg: #4a6fa5;
+            --button-hover: #5d87b3;
+            --switch-on: #4caf50;
+            --switch-off: #ccc;
+            --history-bg: rgba(255, 255, 255, 0.08);
+            --accent-color: #ff6b6b;
+            --press-effect: #3a5a84;
+        }
+
+        [data-theme="light"] {
+            --primary-color: #4a6fa5;
+            --secondary-color: #6b8cae;
+            --background-color: #f5f7fa;
+            --text-color: #333;
+            --card-bg: #ffffff;
+            --border-color: #ddd;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --button-bg: #4a6fa5;
+            --button-hover: #5d87b3;
+            --switch-on: #4caf50;
+            --switch-off: #ccc;
+            --history-bg: rgba(0, 0, 0, 0.05);
+            --accent-color: #ff6b6b;
+            --press-effect: #3a5a84;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+            background-image: radial-gradient(circle at 20% 30%, rgba(55, 71, 133, 0.2) 0%, transparent 60%),
+                              radial-gradient(circle at 80% 70%, rgba(93, 135, 179, 0.2) 0%, transparent 60%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 700px;
+            width: 100%;
+            padding: 20px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-size: 28px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .controls {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .language-selector {
+            padding: 10px 15px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .theme-toggle-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .theme-toggle-btn:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 4px 20px var(--shadow-color);
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            z-index: 1;
+        }
+
+        .result-section {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .result-input {
+            width: 100%;
+            padding: 25px;
+            border-radius: 8px;
+            border: 2px solid var(--border-color);
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            font-size: 24px;
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: bold;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .result-input::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, transparent 100%);
+            pointer-events: none;
+        }
+
+        .draw-button {
+            background: linear-gradient(135deg, var(--button-bg), var(--accent-color));
+            color: white;
+            border: none;
+            padding: 18px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 20px;
+            width: 100%;
+            transition: all 0.2s;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            user-select: none;
+        }
+
+        .draw-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+        }
+
+        .draw-button:active, .draw-button.pressing {
+            transform: translateY(2px);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(135deg, var(--press-effect), var(--accent-color));
+        }
+
+        .draw-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .draw-button:hover::before {
+            left: 100%;
+        }
+
+        .draw-button .spinner {
+            display: none;
+        }
+
+        .draw-button.animating .spinner {
+            display: inline-block;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .mode-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .checkbox-group:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .checkbox-group input {
+            margin-right: 12px;
+            transform: scale(1.3);
+            accent-color: var(--primary-color);
+        }
+
+        .switch-group {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px 0;
+            padding: 15px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 30px;
+            margin-right: 15px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--switch-off);
+            transition: .4s;
+            border-radius: 30px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--switch-on);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(30px);
+        }
+
+        .history-section {
+            margin-top: 30px;
+        }
+
+        .history-title {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .history-list {
+            max-height: 200px;
+            overflow-y: auto;
+            background-color: var(--history-bg);
+            border-radius: 8px;
+            padding: 15px;
+        }
+
+        .history-item {
+            padding: 10px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            transition: all 0.3s;
+        }
+
+        .history-item:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .history-item:last-child {
+            border-bottom: none;
+        }
+
+        .history-time {
+            color: var(--secondary-color);
+            font-size: 14px;
+        }
+
+        .clear-history {
+            background: none;
+            border: none;
+            color: var(--secondary-color);
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 10px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s;
+        }
+
+        .clear-history:hover {
+            color: var(--accent-color);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            color: var(--secondary-color);
+            font-size: 14px;
+        }
+
+        /* 动画效果 */
+        @keyframes resultAnimation {
+            0% { 
+                transform: scale(0.8); 
+                opacity: 0; 
+                box-shadow: 0 0 0 0 rgba(74, 111, 165, 0.7);
+            }
+            50% {
+                box-shadow: 0 0 0 15px rgba(74, 111, 165, 0);
+            }
+            70% {
+                box-shadow: 0 0 0 15px rgba(74, 111, 165, 0);
+            }
+            100% { 
+                transform: scale(1); 
+                opacity: 1;
+                box-shadow: 0 0 0 0 rgba(74, 111, 165, 0);
+            }
+        }
+
+        .animate-result {
+            animation: resultAnimation 1s ease-out;
+        }
+
+        @keyframes flash {
+            0%, 50%, 100% {
+                opacity: 1;
+            }
+            25%, 75% {
+                opacity: 0.3;
+            }
+        }
+
+        .flash {
+            animation: flash 0.5s ease-in-out infinite;
+        }
+
+        @keyframes confetti {
+            0% {
+                transform: translateY(0) rotate(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        .confetti-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: var(--accent-color);
+            opacity: 0;
+        }
+
+        .instruction {
+            text-align: center;
+            margin-top: 10px;
+            color: var(--secondary-color);
+            font-size: 14px;
+        }
+
+        @media (max-width: 600px) {
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .controls {
+                margin-top: 15px;
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .mode-options {
+                grid-template-columns: 1fr;
+            }
+            
+            .draw-button {
+                padding: 18px;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+            
+            .result-input {
+                font-size: 20px;
+                height: 90px;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body data-theme="dark">
+    <div class="confetti-container" id="confettiContainer"></div>
+    
+    <div class="container">
+        <header>
+            <h1 id="title">Bvvd今天玩什么</h1>
+            <div class="controls">
+                <select class="language-selector" id="languageSelector">
+                    <option value="zh">中文</option>
+                    <option value="en">English</option>
+                    <option value="ru">Русский</option>
+                    <option value="de">Deutsch</option>
+                    <option value="fr">Français</option>
+                </select>
+                <button class="theme-toggle-btn" id="themeToggle">切换白天模式</button>
+            </div>
+        </header>
+
+        <div class="card">
+            <div class="result-section">
+                <input type="text" class="result-input" id="resultInput" readonly placeholder="按住下方按钮开始抽取">
+                <button class="draw-button" id="drawButton">
+                    <i class="fas fa-random spinner"></i>
+                    <span id="drawButtonText">玩</span>
+                </button>
+                <div class="instruction" id="instruction">按住按钮开始抽取，松开显示结果</div>
+            </div>
+            
+            <h2 id="modeSelection">模式选择</h2>
+            <div class="mode-options" id="modeOptions">
+                <!-- 模式选项将通过JS动态生成 -->
+            </div>
+            
+            <div class="switch-group">
+                <label class="switch">
+                    <input type="checkbox" id="avoidRepeat" checked>
+                    <span class="slider"></span>
+                </label>
+                <span id="avoidRepeatLabel">避免抽取到上次选项</span>
+            </div>
+            
+            <div class="history-section">
+                <div class="history-title">
+                    <i class="fas fa-history"></i>
+                    <span id="historyTitle">抽取历史</span>
+                </div>
+                <div class="history-list" id="historyList">
+                    <!-- 历史记录将通过JS动态生成 -->
+                </div>
+                <button class="clear-history" id="clearHistory">
+                    <i class="fas fa-trash"></i>
+                    <span id="clearHistoryText">清空历史</span>
+                </button>
+            </div>
+        </div>
+        
+        <footer>
+            <p id="footerText">Bvvd今天玩什么</p>
+        </footer>
+    </div>
+
+    <script>
+        // 多语言支持
+        const translations = {
+            'zh': {
+                'title': 'Bvvd今天玩什么',
+                'modeSelection': '模式选择',
+                'avoidRepeatLabel': '避免抽取到上次选项',
+                'drawButton': '按住抽取',
+                'instruction': '按住按钮开始抽取，松开显示结果',
+                'historyTitle': '抽取历史',
+                'clearHistoryText': '清空历史',
+                'noHistory': '暂无抽取历史',
+                'lightTheme': '切换白天模式',
+                'darkTheme': '切换黑夜模式',
+                'footerText': '© 2023 游戏模式抽取器 - 随机选择您的游戏模式',
+                'modes': {
+                    'ground_historical': '陆战历史模式',
+                    'ground_arcade': '陆战街机模式',
+                    'simulator': '全真模式',
+                    'air_arcade': '空战街机模式',
+                    'air_historical': '空战历史模式'
+                }
+            },
+            'en': {
+                'title': 'Game Mode Randomizer',
+                'modeSelection': 'Mode Selection',
+                'avoidRepeatLabel': 'Avoid previous selection',
+                'drawButton': 'Hold to Draw',
+                'instruction': 'Hold button to draw, release to show result',
+                'historyTitle': 'Draw History',
+                'clearHistoryText': 'Clear History',
+                'noHistory': 'No draw history yet',
+                'lightTheme': 'Switch to Light Mode',
+                'darkTheme': 'Switch to Dark Mode',
+                'footerText': '© 2023 Game Mode Randomizer - Randomly select your game mode',
+                'modes': {
+                    'ground_historical': 'Ground Historical Battles',
+                    'ground_arcade': 'Ground Arcade Battles',
+                    'simulator': 'Simulator Battles',
+                    'air_arcade': 'Air Arcade Battles',
+                    'air_historical': 'Air Historical Battles'
+                }
+            },
+            'ru': {
+                'title': 'Рандомайзер игровых режимов',
+                'modeSelection': 'Выбор режима',
+                'avoidRepeatLabel': 'Избегать предыдущий выбор',
+                'drawButton': 'Удерживайте для выбора',
+                'instruction': 'Удерживайте кнопку для выбора, отпустите для показа результата',
+                'historyTitle': 'История выборов',
+                'clearHistoryText': 'Очистить историю',
+                'noHistory': 'История выборов пуста',
+                'lightTheme': 'Переключить на светлый режим',
+                'darkTheme': 'Переключить на темный режим',
+                'footerText': '© 2023 Рандомайзер игровых режимов - Случайный выбор игрового режима',
+                'modes': {
+                    'ground_historical': 'Наземные исторические бои',
+                    'ground_arcade': 'Наземные аркадные бои',
+                    'simulator': 'Реалистичные бои',
+                    'air_arcade': 'Воздушные аркадные бои',
+                    'air_historical': 'Воздушные исторические бои'
+                }
+            },
+            'de': {
+                'title': 'Spielmodus-Zufallsgenerator',
+                'modeSelection': 'Modusauswahl',
+                'avoidRepeatLabel': 'Vermeide vorherige Auswahl',
+                'drawButton': 'Halten zum Ziehen',
+                'instruction': 'Taste gedrückt halten zum Ziehen, loslassen für Ergebnis',
+                'historyTitle': 'Ziehungsverlauf',
+                'clearHistoryText': 'Verlauf löschen',
+                'noHistory': 'Noch kein Ziehungsverlauf',
+                'lightTheme': 'Zum Hellmodus wechseln',
+                'darkTheme': 'Zum Dunkelmodus wechseln',
+                'footerText': '© 2023 Spielmodus-Zufallsgenerator - Wählen Sie zufällig Ihren Spielmodus',
+                'modes': {
+                    'ground_historical': 'Bodenhistorische Schlachten',
+                    'ground_arcade': 'Boden-Arcade-Schlachten',
+                    'simulator': 'Simulatorschlachten',
+                    'air_arcade': 'Luft-Arcade-Schlachten',
+                    'air_historical': 'Lufthistorische Schlachten'
+                }
+            },
+            'fr': {
+                'title': 'Générateur aléatoire de mode de jeu',
+                'modeSelection': 'Sélection du mode',
+                'avoidRepeatLabel': 'Éviter la sélection précédente',
+                'drawButton': 'Maintenir pour tirer',
+                'instruction': 'Maintenez le bouton pour tirer, relâchez pour voir le résultat',
+                'historyTitle': 'Historique des tirages',
+                'clearHistoryText': 'Effacer l historique',
+                'noHistory': 'Aucun historique pour le moment',
+                'lightTheme': 'Passer en mode jour',
+                'darkTheme': 'Passer en mode nuit',
+                'footerText': '© 2023 Générateur aléatoire de mode de jeu - Sélectionnez aléatoirement votre mode de jeu',
+                'modes': {
+                    'ground_historical': 'Batailles historiques terrestres',
+                    'ground_arcade': 'Batailles terrestres arcade',
+                    'simulator': 'Batailles simulateur',
+                    'air_arcade': 'Batailles aériennes arcade',
+                    'air_historical': 'Batailles aériennes historiques'
+                }
+            }
+        };
+
+        // 应用状态
+        let state = {
+            currentLanguage: 'zh',
+            currentTheme: 'dark',
+            lastResult: null,
+            drawHistory: [],
+            modes: [
+                { id: 'ground_historical', name: '陆战历史模式', checked: true },
+                { id: 'ground_arcade', name: '陆战街机模式', checked: true },
+                { id: 'simulator', name: '全真模式', checked: false },
+                { id: 'air_arcade', name: '空战街机模式', checked: true },
+                { id: 'air_historical', name: '空战历史模式', checked: true }
+            ],
+            isDrawing: false,
+            drawInterval: null
+        };
+
+        // DOM 元素
+        const elements = {
+            languageSelector: document.getElementById('languageSelector'),
+            themeToggle: document.getElementById('themeToggle'),
+            modeOptions: document.getElementById('modeOptions'),
+            avoidRepeat: document.getElementById('avoidRepeat'),
+            avoidRepeatLabel: document.getElementById('avoidRepeatLabel'),
+            resultInput: document.getElementById('resultInput'),
+            drawButton: document.getElementById('drawButton'),
+            drawButtonText: document.getElementById('drawButtonText'),
+            instruction: document.getElementById('instruction'),
+            historyTitle: document.getElementById('historyTitle'),
+            historyList: document.getElementById('historyList'),
+            clearHistory: document.getElementById('clearHistory'),
+            clearHistoryText: document.getElementById('clearHistoryText'),
+            title: document.getElementById('title'),
+            modeSelection: document.getElementById('modeSelection'),
+            footerText: document.getElementById('footerText'),
+            confettiContainer: document.getElementById('confettiContainer')
+        };
+
+        // 初始化函数
+        function init() {
+            // 从本地存储加载历史记录
+            const savedHistory = localStorage.getItem('drawHistory');
+            if (savedHistory) {
+                state.drawHistory = JSON.parse(savedHistory);
+            }
+            
+            renderModeOptions();
+            renderHistory();
+            setupEventListeners();
+            updateUI();
+        }
+
+        // 渲染模式选项
+        function renderModeOptions() {
+            elements.modeOptions.innerHTML = '';
+            
+            state.modes.forEach(mode => {
+                const checkboxGroup = document.createElement('div');
+                checkboxGroup.className = 'checkbox-group';
+                
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.id = mode.id;
+                checkbox.checked = mode.checked;
+                checkbox.addEventListener('change', () => {
+                    mode.checked = checkbox.checked;
+                });
+                
+                const label = document.createElement('label');
+                label.htmlFor = mode.id;
+                label.textContent = translations[state.currentLanguage].modes[mode.id];
+                
+                checkboxGroup.appendChild(checkbox);
+                checkboxGroup.appendChild(label);
+                elements.modeOptions.appendChild(checkboxGroup);
+            });
+        }
+
+        // 渲染历史记录
+        function renderHistory() {
+            if (state.drawHistory.length === 0) {
+                elements.historyList.innerHTML = `<div class="history-item">${translations[state.currentLanguage].noHistory}</div>`;
+                return;
+            }
+            
+            elements.historyList.innerHTML = '';
+            state.drawHistory.slice().reverse().forEach(item => {
+                const historyItem = document.createElement('div');
+                historyItem.className = 'history-item';
+                
+                const modeName = document.createElement('span');
+                modeName.textContent = translations[state.currentLanguage].modes[item.mode];
+                
+                const time = document.createElement('span');
+                time.className = 'history-time';
+                time.textContent = formatTime(item.timestamp);
+                
+                historyItem.appendChild(modeName);
+                historyItem.appendChild(time);
+                elements.historyList.appendChild(historyItem);
+            });
+        }
+
+        // 格式化时间
+        function formatTime(timestamp) {
+            const date = new Date(timestamp);
+            return date.toLocaleTimeString();
+        }
+
+        // 设置事件监听器
+        function setupEventListeners() {
+            elements.languageSelector.addEventListener('change', (e) => {
+                state.currentLanguage = e.target.value;
+                updateUI();
+            });
+            
+            elements.themeToggle.addEventListener('click', toggleTheme);
+            
+            // 鼠标按下事件
+            elements.drawButton.addEventListener('mousedown', startDrawing);
+            // 鼠标释放事件
+            elements.drawButton.addEventListener('mouseup', finishDrawing);
+            elements.drawButton.addEventListener('mouseleave', cancelDrawing);
+            
+            // 触摸设备支持
+            elements.drawButton.addEventListener('touchstart', function(e) {
+                e.preventDefault();
+                startDrawing();
+            });
+            
+            elements.drawButton.addEventListener('touchend', function(e) {
+                e.preventDefault();
+                finishDrawing();
+            });
+            
+            elements.clearHistory.addEventListener('click', clearHistory);
+        }
+
+        // 切换主题
+        function toggleTheme() {
+            state.currentTheme = state.currentTheme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', state.currentTheme);
+            updateUI();
+        }
+
+        // 更新UI文本
+        function updateUI() {
+            // 更新文本内容
+            elements.title.textContent = translations[state.currentLanguage].title;
+            elements.modeSelection.textContent = translations[state.currentLanguage].modeSelection;
+            elements.avoidRepeatLabel.textContent = translations[state.currentLanguage].avoidRepeatLabel;
+            elements.drawButtonText.textContent = translations[state.currentLanguage].drawButton;
+            elements.instruction.textContent = translations[state.currentLanguage].instruction;
+            elements.historyTitle.textContent = translations[state.currentLanguage].historyTitle;
+            elements.clearHistoryText.textContent = translations[state.currentLanguage].clearHistoryText;
+            elements.footerText.textContent = translations[state.currentLanguage].footerText;
+            
+            // 更新主题按钮文本
+            elements.themeToggle.textContent = state.currentTheme === 'dark' 
+                ? translations[state.currentLanguage].lightTheme 
+                : translations[state.currentLanguage].darkTheme;
+            
+            // 更新模式选项标签
+            const labels = elements.modeOptions.querySelectorAll('label');
+            labels.forEach((label, index) => {
+                const modeId = state.modes[index].id;
+                label.textContent = translations[state.currentLanguage].modes[modeId];
+            });
+            
+            // 更新历史记录
+            renderHistory();
+            
+            // 更新主题
+            document.documentElement.setAttribute('data-theme', state.currentTheme);
+        }
+
+        // 开始抽取
+        function startDrawing() {
+            // 获取选中的模式
+            const selectedModes = state.modes.filter(mode => mode.checked);
+            
+            if (selectedModes.length === 0) {
+                showResult(translations[state.currentLanguage].noHistory);
+                return;
+            }
+            
+            // 设置状态
+            state.isDrawing = true;
+            elements.drawButton.classList.add('pressing');
+            
+            // 添加动画效果
+            elements.resultInput.classList.add('flash');
+            elements.resultInput.value = "抽取中...";
+            
+            // 开始快速切换模式
+            let counter = 0;
+            state.drawInterval = setInterval(() => {
+                const randomIndex = Math.floor(Math.random() * selectedModes.length);
+                elements.resultInput.value = translations[state.currentLanguage].modes[selectedModes[randomIndex].id];
+                counter++;
+            }, 80);
+        }
+
+        // 完成抽取
+        function finishDrawing() {
+            if (!state.isDrawing) return;
+            
+            // 清除抽取动画
+            clearInterval(state.drawInterval);
+            elements.resultInput.classList.remove('flash');
+            elements.drawButton.classList.remove('pressing');
+            
+            // 获取选中的模式
+            const selectedModes = state.modes.filter(mode => mode.checked);
+            
+            let availableModes = [...selectedModes];
+            
+            // 如果开启了避免重复且上次有结果
+            if (elements.avoidRepeat.checked && state.lastResult && selectedModes.length > 1) {
+                availableModes = selectedModes.filter(mode => mode.id !== state.lastResult);
+            }
+            
+            // 随机选择一个模式
+            const randomIndex = Math.floor(Math.random() * availableModes.length);
+            const selectedMode = availableModes[randomIndex];
+            
+            // 更新状态
+            state.lastResult = selectedMode.id;
+            
+            // 添加到历史记录
+            state.drawHistory.push({
+                mode: selectedMode.id,
+                timestamp: Date.now()
+            });
+            
+            // 保存到本地存储
+            localStorage.setItem('drawHistory', JSON.stringify(state.drawHistory));
+            
+            // 显示结果
+            showResult(translations[state.currentLanguage].modes[selectedMode.id]);
+            
+            // 更新历史记录显示
+            renderHistory();
+            
+            // 显示庆祝效果
+            createConfetti();
+            
+            // 重置状态
+            state.isDrawing = false;
+        }
+
+        // 取消抽取
+        function cancelDrawing() {
+            if (!state.isDrawing) return;
+            
+            // 清除抽取动画
+            clearInterval(state.drawInterval);
+            elements.resultInput.classList.remove('flash');
+            elements.drawButton.classList.remove('pressing');
+            
+            // 重置状态
+            state.isDrawing = false;
+        }
+
+        // 显示结果
+        function showResult(text) {
+            elements.resultInput.value = text;
+            elements.resultInput.classList.remove('animate-result');
+            // 触发重排以重新启动动画
+            void elements.resultInput.offsetWidth;
+            elements.resultInput.classList.add('animate-result');
+        }
+
+        // 清空历史记录
+        function clearHistory() {
+            state.drawHistory = [];
+            localStorage.removeItem('drawHistory');
+            renderHistory();
+        }
+
+        // 创建彩色纸屑效果
+        function createConfetti() {
+            elements.confettiContainer.innerHTML = '';
+            const colors = ['#ff6b6b', '#4a6fa5', '#5d87b3', '#7d9bbd', '#4caf50', '#ff9800'];
+            
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.width = (5 + Math.random() * 10) + 'px';
+                confetti.style.height = (5 + Math.random() * 10) + 'px';
+                confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                
+                const animation = confetti.animate([
+                    { transform: 'translateY(0) rotate(0)', opacity: 1 },
+                    { transform: `translateY(100vh) rotate(${720 + Math.random() * 360}deg)`, opacity: 0 }
+                ], {
+                    duration: 1500 + Math.random() * 2000,
+                    easing: 'cubic-bezier(0.1, 0.8, 0.3, 1)'
+                });
+                
+                animation.onfinish = () => {
+                    confetti.remove();
+                };
+                
+                elements.confettiContainer.appendChild(confetti);
+            }
+        }
+
+        // 初始化应用
+        init();
+    </script>
+</body>
+</html>
